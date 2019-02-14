@@ -1,0 +1,37 @@
+
+version: '3.2'
+
+networks:
+    hlf:
+
+services:
+
+    ca_org3:
+        networks:
+            hlf:
+                aliases:
+                    - ca_org3
+        image: hyperledger/fabric-ca:1.2.0
+        hostname: ca.org3.example.com
+        environment:
+            - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+            - FABRIC_CA_SERVER_CA_NAME=ca.org3.example.com
+            - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org3.example.com-cert.pem
+            - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d137f7ba89f86a61499ee4b668b00dc9871cc93dc7944780766b1b01c93b7ec9_sk
+        ports:
+            - 9054:7054   
+        command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+        volumes:
+            - ../crypto-config/peerOrganizations/org3.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+
+    couchdb0_org3:
+        image: hyperledger/fabric-couchdb
+        hostname: couchdb0_org3
+        networks:
+           - hlf
+
+    couchdb1_org3:
+        image: hyperledger/fabric-couchdb
+        hostname: couchdb1_org3
+        networks:
+           - hlf
