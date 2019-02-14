@@ -1,4 +1,4 @@
-NETWORK_NAME="imapps-gr2"
+NETWORK_NAME="my-network"
 NETWORK_VERSION="0.0.1"
 
 # create and copy bna file
